@@ -13,7 +13,7 @@ jobs:
       MPLBACKEND: Agg
     strategy:
       matrix:
-        python-version: [3.10, 3.11]
+        python-version: ['3.10', '3.11']
 
     steps:
     - uses: actions/checkout@v4
@@ -33,3 +33,11 @@ jobs:
     - name: Run tests
       run: |
         pytest -q
+
+    - name: Debug: show python info
+      if: always()
+      run: |
+        echo "Runner: $(uname -a)"
+        python --version
+        which python || where python || true
+        python -c "import sys,platform; print(sys.executable, sys.path, platform.platform())"
